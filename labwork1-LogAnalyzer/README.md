@@ -1,7 +1,40 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=16018114&assignment_repo_type=AssignmentRepo)
-# Лабораторная работа 1
+# Лабораторная работа 2 - Log Analyzer
 
-## Задача
+Небольшая консольная утилита для анализа access.log: ищет проблемные запросы со статусом 5xx, считает по ним статистику и помогает найти самый нагруженный временной интервал.
+
+---
+
+## Пример запуска
+
+```bash
+cmake -S . -B build
+cmake --build build
+./build/AnalyzeLog access.log       --output=errors.txt       --print       --stats=5       --window=60       --from=805821284       --to=807117284
+```
+
+## Пример вывода
+
+```text
+Loaded log file: access.log
+Total lines: 137204
+
+5xx errors written to: errors.txt
+
+Top 5 failing requests:
+  1) GET /shuttle/countdown/HTTP/1.0   312
+  2) GET /shuttle/missions/STS-51      201
+  3) GET /shuttle/missions/archives    150
+  4) GET /htbin/cdt_main.pl             97
+  5) GET /shuttle/nosuchpath/HTTP/1.0   54
+
+Max requests window (60 s):
+  from 805821280 to 805821340 : 1823 requests
+```
+
+---
+
+## ТЗ:
+
 
 Реализовать [утилиту](https://ru.wikipedia.org/wiki/%D0%A3%D1%82%D0%B8%D0%BB%D0%B8%D1%82%D0%B0), производящую анализ [access.log](https://ru.wikipedia.org/wiki/Access.log).
 
@@ -98,9 +131,3 @@ AnalyzeLog access.log -w 10
 ## Ограничения
 
 Внешние библиотеки запрещены. Разрешается пользоваться только стандартной библиотекой С или С++.
-
-## Deadlines
-
-1. 01.10.23 24:00 - 0.8
-2. 08.10.23 24:00 - 0.65
-3. 15.10.23 24:00 - 0.5
